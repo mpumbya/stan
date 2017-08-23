@@ -173,14 +173,14 @@ class ShoppinglistTestCase(unittest.TestCase):
             for key in User.users:
                 self.assertEqual(value['user_id']+1, key)
 
-    def test_create_bucketlist_without_user_fails(self):
+    def test_create_shoppinglist_without_user_fails(self):
         """Test Shoppinglist creation without a user fails"""
         User.users = {}
         result = self.app.create_shoplist()
         expected = {1: {'user_id': 1, 'name': 'Apple', 'description': 'Fresh Green Apples'}}
         self.assertNotEqual(expected, result)
 
-    def test_successful_bucketlist_creation(self):
+    def test_successful_shoppinglist_creation(self):
         """Test Shoppinglist creation is successful"""
         result = self.app.create_shoplist()
         expected = {5: {'user_id': 0, 'name': 'apples', 'description': 'Fresh Green Apples'}}
@@ -205,7 +205,7 @@ class ActivityTestCase(unittest.TestCase):
         # Set some default activity data
         self.activity_data = {
             1: {
-                'bucketlist_id': 1,
+                'shoppinglist_id': 1,
                 'name': 'apples',
                 'description': 'Fresh Green Apples',
                 'status': True
