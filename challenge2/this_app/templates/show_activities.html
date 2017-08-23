@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block title %}Bucketlist items{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="bucketlist">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="/">Home</a></li>
+                <li role="presentation"><a href="{{ url_for('show_shoplists') }}">Shopping lists</a></li>
+                <li role="presentation"><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <h2>Your Shopping list in detail</h2></br>
+            
+            <!-- Display error/success/info messages here -->
+                {% for message in get_flashed_messages() %}
+                    {{ message }}
+                {% endfor %}
+
+            {% if data %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for k, e in data.items() %}
+                            
+                                <tr>
+                                    <td>{{ e['title'] }}</td>
+                                    <td>{{ e['description'] }}</td>
+                                    <td>
+                                        {% if e['status'] %}
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        {% else %}
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <!-- Edit Modal -->
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal"></span>
+                                        </a>&emsp;
+
+                                        <!-- Edit Modal Code -->
+                                        <div class="modal fade" id="edit-modal" role="dialog">
+                                            <div class="modal-dialog">
+                                            
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Edit Activity</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="/show_activities/edit_activity/{{ shoplist_id }}/{{ k }}" method="POST">
+                                                            {{ form.csrf_token }}
+                                                            {{ form.hidden }}
+                                                            <div class="row form-group">
+                                                                <div class="col-lg-3">
+                                                                    <h4>Title</h4>
+                                                                </div>
+                                                                <div class="col-lg-7">
+                                                                    {{ form.title(class_ = 'form-control', placeholder = e['title'], autofocus=true, required=true) }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-lg-3">
+                                                                    <h4>Description</h4>
+                                                                </div>
+                                                                <div class="col-lg-7">
+                                                                    {{ form.description(class_ = 'form-control', placeholder = e['description'], required=true) }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-lg-3">
+                                                                    <h4>Status</h4>
+                                                                </div>
+                                                                <div class="col-lg-7">
+                                                                    {% if e['status'] %}
+                                                                        <Input type="checkbox" name="status" value="active" />
+                                                                    {% else %}
+                                                                        <Input type="checkbox" name="status" value="active" /> 
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="/show_activities/edit_activity/{{ shop_id }}/{{ k }}">
+                                                                    <Input type="submit" class="btn btn-default" value="Save">
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-trash" data-toggle="modal" data-target="#{{ k }}delete-modal"></span>
+                                        </a>
+
+                                        <!-- Delete Modal Code -->
+                                        <div class="modal fade" id="{{ k }}delete-modal" role="dialog">
+                                            <div class="modal-dialog">
+                                            
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Delete this.activity</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Do you really want to delete this item?<p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/show_activities/delete_activity/{{ shoplist_id }}/{{ k }}"/>
+                                                            <Input type="submit" class="btn btn-default" value="Delete">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#add-activity-modal">Add new item</button> </br>
+                <br>
+
+                <!-- Add Item Modal -->
+                <div class="modal fade" id="add-activity-modal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Shopping List Item</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/show_activities/create_activity/{{ shoplist_id }}" method="POST">
+                                    {{ form.csrf_token }}
+                                    {{ form.hidden }}
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Title</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            {{ form.title(class_ = 'form-control', placeholder = "Shoppinglist Title", autofocus=true, required=true) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Quantity</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            {{ form.description(class_ = 'form-control', placeholder = "Quantity", required=true) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Status</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <Input type="checkbox" name="status" value="active" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <Input type="submit" class="btn btn-default" value="Save">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+
+            {% else %}
+                <h3>Your Shopping list is empty. Add Items</h3><br>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#add-activity-modal">Create a Shopping list Item</button> </br>
+                </br></br>
+                <!-- Add Item Modal -->
+                <div class="modal fade" id="add-activity-modal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Items</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/show_activities/create_activity/{{ shoplist_id }}" method="POST">
+                                    {{ form.csrf_token }}
+                                    {{ form.hidden }}
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Title</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            {{ form.title(class_ = 'form-control', placeholder = "Item", autofocus=true, required=true) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Quantity</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            {{ form.description(class_ = 'form-control', placeholder = "Quantity", required=true) }}
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-3">
+                                            <h4>Status</h4>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <Input type="checkbox" name="status" value="active" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <Input type="submit" class="btn btn-default" value="Save">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    $('#add-activity-modal').on('hidden.bs.modal', function (e) {
+    $(this).find("input, textarea").val('').end()
+           .find("input[type=checkbox]").prop("checked", "").end();
+    })
+</script>
+
+{% endblock %}

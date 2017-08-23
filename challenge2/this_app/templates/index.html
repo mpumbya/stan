@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block body %}
+
+<div class="homepage-img">
+    <div class="container">
+        <div class="get-started">
+            <h1>Welcome!</h1>
+            <h2>Create Your Shopping List</h2> </br>
+            <a href="{{ url_for('signup') }}" class="btn btn-primary">Let's Get Started</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
