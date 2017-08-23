@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mpumbya/stan.svg?branch=master)](https://travis-ci.org/mpumbya/stan)
+
 # The Flask Shopping List System
 
 A simple Python-Flask Shopping List system that allows users to keep track of the things they want to purchase and what they have already purchased.
