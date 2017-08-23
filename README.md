@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/mpumbya/stan.svg?branch=master)](https://travis-ci.org/mpumbya/stan)
+[![Coverage Status](https://coveralls.io/repos/github/mpumbya/stan/badge.svg?branch=master)](https://coveralls.io/github/mpumbya/stan?branch=master)
 
 # The Flask Shopping List System
 
