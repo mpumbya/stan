@@ -254,12 +254,12 @@ def edit_shoplist():
 
         shoplists_dict =  Shoplist. Shoplists.items()
         user_shoplists = {k:v for k, v in shoplists_dict if session['user_id']==v['user_id']}
-        Shoplist = {k:v for k, v in user_shoplists.items() if k==int(request.form['key'])}
+        shoplist = {k:v for k, v in user_shoplists.items() if k==int(request.form['key'])}
 
         if form.validate_on_submit():
-             Shoplist =  Shoplist(form.name.data, form.description.data)
+             shoplist =  Shoplist(form.name.data, form.description.data)
 
-             Shoplist.edit_shoplist()
+             shoplist.edit_shoplist()
 
         return redirect(url_for("show_shoplists", data=user_shoplists))
 
