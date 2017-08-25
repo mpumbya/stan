@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="container">
-    <div class="bucketlist">
+    <div class="shop">
         <nav>
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="/">Home</a></li>
@@ -106,7 +106,7 @@
 														<p>Deleting this Shopping list will also delete its items<p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form action="{{ url_for('delete_shoplist') }}" method="POST">  <!-- K is The Bucketlist key, = bucketlist ID  -->
+                                                        <form action="{{ url_for('delete_shoplist') }}" method="POST">  <!-- K is The shop key, = shop ID  -->
                                                               <input type="hidden" name="key" value="{{ k }}"/>   
                                                             <Input type="submit" class="btn btn-default" value="Delete"/>
                                                          </form> 
@@ -125,7 +125,7 @@
                 </table>
                         
                         <!-- Add shoplist Modal Code -->
-                        <div class="modal fade" id="add-bucketlist-modal" role="dialog">
+                        <div class="modal fade" id="add-shop-modal" role="dialog">
                             <div class="modal-dialog">
                             
                                 <!-- Modal content-->
@@ -164,17 +164,17 @@
                             </div>
                         </div>
        
-                <button class="btn btn-primary" data-toggle="modal" data-target="#add-bucketlist-modal">Add new Shopping list</button> </br>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#add-shop-modal">Add new Shopping list</button> </br>
                 <br>
                 
 
             {% else %}
                 <h3>You have no Shopping list(s), create one?</h3><br>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#add-bucketlist-modal">Create Shoppinglist</button> </br>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#add-shop-modal">Create Shoppinglist</button> </br>
                 </br></br>
 
                 <!-- Add Shopping Modal Code -->
-                <div class="modal fade" id="add-bucketlist-modal" role="dialog">
+                <div class="modal fade" id="add-shop-modal" role="dialog">
                     <div class="modal-dialog">
                     
                         <!-- Modal content-->
@@ -219,7 +219,7 @@
 </div>
 <script>
     // $('#myModal form :input-1').val("");
-        $('#add-bucketlist-modal').on('hidden.bs.modal', function (e) {
+        $('#add-shop-modal').on('hidden.bs.modal', function (e) {
             $(this).find("input, textarea").val('').end()
         })
 </script>

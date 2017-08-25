@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Bucketlist items{% endblock %}
+{% block title %}shopping List items{% endblock %}
 {% block body %}
 
 <div class="container">
-    <div class="bucketlist">
+    <div class="shop">
         <nav>
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="/">Home</a></li>
@@ -68,7 +68,7 @@
                                                                     <h4>Title</h4>
                                                                 </div>
                                                                 <div class="col-lg-7">
-                                                                    {{ form.title(class_ = 'form-control', placeholder = e['title'], autofocus=true, required=true) }}
+                                                                    {{ form.title(class_ = 'form-control', value = e['title'], autofocus=true, required=true) }}
                                                                 </div>
                                                             </div>
                                                             <div class="row form-group">
@@ -76,7 +76,7 @@
                                                                     <h4>Description</h4>
                                                                 </div>
                                                                 <div class="col-lg-7">
-                                                                    {{ form.description(class_ = 'form-control', placeholder = e['description'], required=true) }}
+                                                                    {{ form.description(class_ = 'form-control', value = e['description'], required=true) }}
                                                                 </div>
                                                             </div>
                                                             <div class="row form-group">
